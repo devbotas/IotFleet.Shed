@@ -19,6 +19,6 @@ jobs:
       - name: build the image
         run: |
           docker buildx build --push \
-            -f "Tinkerforge.Tinkerforge.AirQualityMonitor/Dockerfile" \
+            -f "Tinkerforge.ShedMonitor/Dockerfile" \
             --tag devbot9/tinkerforge-shedmonitor:latest \
             --platform linux/amd64,linux/arm/v7,linux/arm64 .

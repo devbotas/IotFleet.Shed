@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Tinkerforge.ShedMonitor": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

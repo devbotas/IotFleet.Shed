@@ -98,9 +98,6 @@ namespace ShedMonitor {
                         Thread.Sleep(2000);
                     }
 
-                    _systemUptime.Value = (float)(DateTime.Now - _startTime).TotalHours;
-                    _systemIpAddress.Value = Program.GetLocalIpAddress();
-
                     Thread.Sleep(500);
                 }
 

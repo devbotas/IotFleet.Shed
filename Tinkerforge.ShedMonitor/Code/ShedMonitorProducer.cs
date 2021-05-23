@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Threading;
 using DevBot9.Protocols.Homie;
+using DevBot9.Protocols.Homie.Utilities;
 using NLog;
 using Tinkerforge;
 
 namespace ShedMonitor {
     class ShedMonitorProducer {
         private CancellationTokenSource _globalCancellationTokenSource = new CancellationTokenSource();
-        private ReliableBroker _reliableBroker;
+        private ResilientHomieBroker _broker = new ResilientHomieBroker();
 
         private HostDevice _device;
         public HostFloatProperty Pressure;
@@ -27,13 +28,11 @@ namespace ShedMonitor {
 
         public ShedMonitorProducer() { }
 
-        public void Initialize(ReliableBroker reliableBroker) {
+        public void Initialize(string mqttBrokerIpAddress) {
             Log.Info($"Initializing {nameof(ShedMonitorProducer)}.");
 
             _globalCancellationTokenSource = new CancellationTokenSource();
-            _reliableBroker = reliableBroker;
             _device = DeviceFactory.CreateHostDevice("shed-monitor", "Shed monitor");
-            _reliableBroker.PublishReceived += _device.HandlePublishReceived;
 
             Log.Info($"Creating Homie properties.");
             _device.UpdateNodeInfo("general", "General properties", "no-type");
@@ -50,7 +49,13 @@ namespace ShedMonitor {
             _systemIpAddress = _device.CreateHostStringProperty(PropertyType.State, "system", "ip-address", "IP address", Program.GetLocalIpAddress());
 
             Log.Info($"Initializing Homie entities.");
-            _device.Initialize(_reliableBroker.PublishToTopic, _reliableBroker.SubscribeToTopic);
+            _broker.PublishReceived += _device.HandlePublishReceived;
+            _broker.Initialize(mqttBrokerIpAddress, _device.WillTopic, _device.WillPayload, (severity, message) => {
+                if (severity == "Info") { Log.Info(message); }
+                else if (severity == "Error") { Log.Error(message); }
+                else { Log.Debug(message); }
+            });
+            _device.Initialize(_broker.PublishToTopic, _broker.SubscribeToTopic);
 
             new Thread(() => {
                 Log.Info($"Spinning up parameter monitoring task.");

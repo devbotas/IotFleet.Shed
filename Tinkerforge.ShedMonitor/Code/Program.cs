@@ -22,7 +22,6 @@ namespace ShedMonitor {
         private static string _localHostname = "no-hostname";
         private static string _localIpAddress = "0.0.0.0";
 
-        private static ReliableBroker _reliableBroker = new ReliableBroker();
         private static ShedMonitorProducer _shedMonitorProducer = new ShedMonitorProducer();
 
         public static Logger Log = LogManager.GetCurrentClassLogger();
@@ -69,8 +68,7 @@ namespace ShedMonitor {
             // Initializing classes.
             Log.Info("Initializing connections.");
             DeviceFactory.Initialize("homie");
-            _reliableBroker.Initialize(brokerIp);
-            _shedMonitorProducer.Initialize(_reliableBroker);
+            _shedMonitorProducer.Initialize(brokerIp);
 
             // Connecting to bricklets.
             _brickConnection = new IPConnection();

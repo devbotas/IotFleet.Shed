@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevBot9.Protocols.Homie" Version="0.9.0" />
-    <PackageReference Include="DevBot9.Protocols.Homie.Utilities" Version="0.9.0" />
+    <PackageReference Include="DevBot9.Protocols.Homie" Version="0.10.0-preview.30" />
+    <PackageReference Include="DevBot9.Protocols.Homie.Utilities" Version="0.10.0-preview.30" />
     <PackageReference Include="FiftyOneNorth.Tinkerforge" Version="1.0.7" />
     <PackageReference Include="InfluxDB.Client" Version="2.0.0-dev.3401" />
     <PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />

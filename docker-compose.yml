@@ -46,7 +46,9 @@ services:
       - bhd-data:/app/data
 
   domekt200:
-    image: devbot9/homiewrapper-domekt200:latest
+    build:
+      context: .
+      dockerfile: Domekt200/Dockerfile
     privileged: true
     tty: true
     restart: unless-stopped
@@ -57,18 +59,6 @@ services:
       io.resin.features.dbus: '1'
       io.resin.features.supervisor-api: '1'
       io.resin.features.resin-api: '1'
-
-  poor-mans-cooler:
-    build:
-      context: .
-      dockerfile: Cooler.Dockerfile.template
-    privileged: true
-    tty: true
-    restart: unless-stopped
-    depends_on: 
-      - domekt200
-      - influxdb
-    network_mode: host
 
   shedmonitor:
     image: devbot9/tinkerforge-shedmonitor:latest

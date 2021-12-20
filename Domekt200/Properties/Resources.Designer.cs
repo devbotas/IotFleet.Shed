@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Shed.Properties {
+namespace IotFleet.Shed.Properties {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace Shed.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -39,7 +39,7 @@ namespace Shed.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("HomieWrapper.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IotFleet.Shed.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -72,7 +72,7 @@ namespace Shed.Properties {
         ///  &lt;variable name=&quot;LogsFolder&quot; value=&quot;!LogsFolderTag!&quot;/&gt;
         ///
         ///  &lt;targets&gt;
-        ///    &lt;target name=&quot;logFile&quot; maxArchiveFiles=&quot;30&quot; archiveNumbering=&quot;Date&quot; archiveEvery=&quot;Month&quot; xsi:type=&quot;File&quot; fileName=&quot;${LogsFolder}/Ap [rest of string was truncated]&quot;;.
+        ///    &lt;target name=&quot;logFile&quot; maxArchiveFiles=&quot;30&quot; archiveNumbering=&quot;Date&quot; archiveEvery=&quot;Month&quot; xsi:type=&quot;File&quot; fileName=&quot;${Log [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string NLogConfig {
             get {

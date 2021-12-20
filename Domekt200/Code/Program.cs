@@ -49,7 +49,7 @@ class Program {
 
         new Thread(() => {
             while (true) {
-                var temperaturePoint = PointData.Measurement("Recuperator").Field("SupplyAirTemperature", Convert.ToDouble(_recuperator.SupplyAirTemperatureProperty, CultureInfo.InvariantCulture)).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+                var temperaturePoint = PointData.Measurement("Recuperator").Field("SupplyAirTemperature", Convert.ToDouble(_recuperator.SupplyAirTemperatureProperty.Value, CultureInfo.InvariantCulture)).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
                 tevukasWriteApi.WritePoint(bucket, org, temperaturePoint);
 

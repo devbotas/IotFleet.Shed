@@ -1,0 +1,7 @@
+FROM eclipse-mosquitto:2.0.12-openssl
+
+RUN apk add nano
+RUN apk add openssl
+
+COPY mosquitto.conf /mosquitto/config/
+COPY passwordfile /mosquitto/config/

@@ -1,0 +1,76 @@
+version: '2.1'
+
+volumes: 
+  influxdb-data:
+    name: influxdb-data
+  mosquitto-settings:
+    name: mosquitto-settings
+  mosquitto-data:
+    name: mosquitto-data
+  mosquitto-logs:
+    name: mosquitto-logs
+  bhd-data:
+    name: bhd-data
+
+services:
+  influxdb:
+    image: influxdb:2.1.0
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+
+  mosquitto:
+    build:
+      context: ./mosquitto
+    image: devbot9/mosquitto:2.0.12.3
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-settings:/mosquitto/config
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-logs:/mosquitto/log
+
+  bhd:
+    image: ghcr.io/tevux-tech/bhd:0.2.1
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "80:80"
+    volumes: 
+      - bhd-data:/app/data
+
+  domekt200:
+    image: devbot9/homiewrapper-domekt200:latest
+    privileged: true
+    tty: true
+    restart: unless-stopped
+    network_mode: host
+    labels:
+      io.resin.features.kernel-modules: '1'
+      io.resin.features.firmware: '1'
+      io.resin.features.dbus: '1'
+      io.resin.features.supervisor-api: '1'
+      io.resin.features.resin-api: '1'
+
+  poor-mans-cooler:
+    build:
+      context: .
+      dockerfile: Cooler.Dockerfile.template
+    privileged: true
+    tty: true
+    restart: unless-stopped
+    depends_on: 
+      - domekt200
+      - influxdb
+    network_mode: host
+
+  shedmonitor:
+    image: devbot9/tinkerforge-shedmonitor:latest
+    restart: unless-stopped
+    network_mode: host

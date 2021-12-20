@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+WORKDIR /src
+COPY . .
+RUN ls -1l
+
+WORKDIR /src/PoorMansCooler
+
+RUN dotnet publish  -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim AS run
+WORKDIR /app
+COPY --from=build /app/publish .
+
+CMD [ "dotnet", "PoorMansCooler.dll"]

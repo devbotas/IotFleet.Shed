@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IotFleet.Properties {
+namespace Shed.Properties {
     using System;
     
     

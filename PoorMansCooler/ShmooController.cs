@@ -1,4 +1,5 @@
 ﻿using System.Device.Gpio;
+using IotFleet;
 
 namespace PoorMansCooler {
     public class ShmooController {

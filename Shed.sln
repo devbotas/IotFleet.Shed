@@ -5,13 +5,17 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domekt200", "Domekt200\Domekt200.csproj", "{3FBA678B-71B5-4548-85AD-0DAA7C98458D}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Helpers", "Helpers\Helpers.shproj", "{92F89D97-B810-405E-B1E6-4D1D0833206D}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CommonCode", "Helpers\CommonCode.shproj", "{92F89D97-B810-405E-B1E6-4D1D0833206D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShedMonitor", "ShedMonitor\ShedMonitor.csproj", "{8954B424-141B-49F8-B683-236F5E27BE22}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansCooler", "PoorMansCooler\PoorMansCooler.csproj", "{E23EB1CC-9E7F-4016-9D3A-A47252071961}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Helpers\SharedProject1.projitems*{3fba678b-71b5-4548-85ad-0daa7c98458d}*SharedItemsImports = 5
 		Helpers\SharedProject1.projitems*{92f89d97-b810-405e-b1e6-4d1d0833206d}*SharedItemsImports = 13
+		Helpers\SharedProject1.projitems*{e23eb1cc-9e7f-4016-9d3a-a47252071961}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +30,10 @@ Global
 		{8954B424-141B-49F8-B683-236F5E27BE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8954B424-141B-49F8-B683-236F5E27BE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8954B424-141B-49F8-B683-236F5E27BE22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

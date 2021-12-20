@@ -2,7 +2,7 @@
 using System.Device.I2c;
 using UnitsNet;
 
-namespace PoorMansCooler
+namespace IotFleet
 {
     public class Sn3218
     {

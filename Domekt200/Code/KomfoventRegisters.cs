@@ -1,25 +1,25 @@
-﻿namespace IotFleet {
-    enum KomfoventRegisters : ushort {
-        // General section.
-        StartStop = 10000,
-        Season,
-        AlarmStatusWarnings,
-        C4Configuration,
-        HourAndMinute,
-        DayOfWeek,
-        MonthAndDay,
-        Year,
-        AlarmStatusStopFlags,
-        AlarmStatusStopCode,
-        ModbusAddress,
-        ExternalHeaterControlSignalType,
+﻿namespace IotFleet.Shed;
 
-        // Ventilation section.
-        VentilationLevelManual = 10100,
-        VentilationLevelCurrent,
-        ModeAutoManual,
+enum KomfoventRegisters : ushort {
+    // General section.
+    StartStop = 10000,
+    Season,
+    AlarmStatusWarnings,
+    C4Configuration,
+    HourAndMinute,
+    DayOfWeek,
+    MonthAndDay,
+    Year,
+    AlarmStatusStopFlags,
+    AlarmStatusStopCode,
+    ModbusAddress,
+    ExternalHeaterControlSignalType,
 
-        // Temperatures section.
-        SupplyAirTemperature = 10300
-    }
+    // Ventilation section.
+    VentilationLevelManual = 10100,
+    VentilationLevelCurrent,
+    ModeAutoManual,
+
+    // Temperatures section.
+    SupplyAirTemperature = 10300
 }

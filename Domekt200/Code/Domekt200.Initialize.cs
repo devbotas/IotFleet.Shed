@@ -2,11 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DevBot9.Protocols.Homie;
+using Tevux.Protocols.Mqtt;
 
 namespace IotFleet.Shed;
 
 partial class Domekt200 {
-    public void Initialize(string brokerIp, string modBusIp) {
+    public void Initialize(ChannelConnectionOptions channelOptions, string modBusIp) {
         Log.Info($"Creating Homie properties.");
         _device = DeviceFactory.CreateHostDevice("recuperator", "Domekt 200");
 
@@ -80,16 +81,8 @@ partial class Domekt200 {
         // Now starting up everything.
         Log.Info($"Initializing Homie entities.");
         _reliableModbus.Initialize(modBusIp);
-        _broker.Initialize(brokerIp, (severity, message) => {
-            if (severity == "Info") { Log.Info(message); }
-            else if (severity == "Error") { Log.Error(message); }
-            else { Log.Debug(message); }
-        });
-        _device.Initialize(_broker, (severity, message) => {
-            if (severity == "Info") { Log.Info(message); }
-            else if (severity == "Error") { Log.Error(message); }
-            else { Log.Debug(message); }
-        });
+        _broker.Initialize(channelOptions);
+        _device.Initialize(_broker);
 
         // Spinning up spinners.
         Task.Run(async () => await PollDomektOverModbusContinuouslyAsync(new CancellationToken()));

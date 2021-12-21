@@ -61,8 +61,9 @@ public static class ModbusHelper {
     }
 
     private static void ByteToBools(byte b, bool[] bools, int offset, int count) {
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < count; i++) {
             bools[offset + i] = ((b >> i) & 0x01) == 1;
+        }
     }
 
     public static byte BytesForWords(int count) {
@@ -103,31 +104,37 @@ public static class ModbusHelper {
     }
 
     public static void Copy(byte[] src, int srcOffset, byte[] dst, int dstOffset, int count) {
-        for (var i = 0; i < count; i++)
+        for (var i = 0; i < count; i++) {
             dst[dstOffset + i] = src[srcOffset + i];
+        }
     }
 
     public static bool[] Clone(bool[] values) {
         var clone = new bool[values.Length];
-        for (var i = 0; i < values.Length; i++)
+        for (var i = 0; i < values.Length; i++) {
             clone[i] = values[i];
+        }
+
         return clone;
     }
 
     public static ushort[] Clone(ushort[] values) {
         var clone = new ushort[values.Length];
-        for (var i = 0; i < values.Length; i++)
+        for (var i = 0; i < values.Length; i++) {
             clone[i] = values[i];
+        }
+
         return clone;
     }
 
     public static void AssertEqual(int a, int b, string format) {
-        if (a != b) Throw(format, a, b);
+        if (a != b) { Throw(format, a, b); }
     }
 
     public static void Throw(string format, params object[] args) {
         var message = format;
-        if (args.Length > 0) message = string.Format(format, args);
+        if (args.Length > 0) { message = string.Format(format, args); }
+
         throw new Exception(message);
     }
 }

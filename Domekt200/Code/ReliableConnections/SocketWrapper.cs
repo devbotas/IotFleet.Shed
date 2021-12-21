@@ -12,7 +12,7 @@ class TcpSocketWrapper : IExceptionlessSocket {
 
     public bool TrySend(byte[] dataToSend, int offset, int length) {
         var actualSocket = ActualSocket;
-        if (actualSocket == null) return false;
+        if (actualSocket == null) { return false; }
 
         var numberOfBytesSent = 0;
         var isOk = true;
@@ -36,7 +36,7 @@ class TcpSocketWrapper : IExceptionlessSocket {
 
     public (bool IsOk, int Count) TryReceive(byte[] receiveBuffer, int offset, int minimum, int maximum) {
         var actualSocket = ActualSocket;
-        if (actualSocket == null) return (false, 0);
+        if (actualSocket == null) { return (false, 0); }
 
         var isOk = true;
         var numberOfBytesReceived = 0;
@@ -46,8 +46,8 @@ class TcpSocketWrapper : IExceptionlessSocket {
             var bytesToReceive = minimum;
 
             if (available > minimum) {
-                if (available > maximum) bytesToReceive = maximum;
-                else bytesToReceive = available;
+                if (available > maximum) { bytesToReceive = maximum; }
+                else { bytesToReceive = available; }
             }
 
             while (numberOfBytesReceived != bytesToReceive) {
@@ -76,7 +76,7 @@ class TcpSocketWrapper : IExceptionlessSocket {
 
     public void Dispose() {
         var actualSocket = ActualSocket;
-        if (actualSocket == null) return;
+        if (actualSocket == null) { return; }
 
         try {
             actualSocket.Shutdown(SocketShutdown.Both);

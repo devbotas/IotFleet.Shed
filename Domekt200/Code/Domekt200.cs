@@ -7,8 +7,8 @@ namespace IotFleet.Shed;
 
 partial class Domekt200 {
     private HostDevice _device;
-    private PahoHostDeviceConnection _broker = new PahoHostDeviceConnection();
-    private ReliableModbus _reliableModbus = new ReliableModbus();
+    private readonly YahiTevuxHostConnection _broker = new();
+    private readonly ReliableModbus _reliableModbus = new();
 
     public HostChoiceProperty ActualState { get; private set; }
     public HostChoiceProperty ActualVentilationLevelProperty { get; private set; }
@@ -19,7 +19,7 @@ partial class Domekt200 {
     HostChoiceProperty _actualModbusConnectionState;
     HostNumberProperty _disconnectCount;
 
-    private DateTime _startTime = DateTime.Now;
+    private readonly DateTime _startTime = DateTime.Now;
     private HostNumberProperty _systemUptime;
 
     public static Logger Log = LogManager.GetCurrentClassLogger();

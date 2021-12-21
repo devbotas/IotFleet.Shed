@@ -3,14 +3,14 @@ using IotFleet;
 
 namespace PoorMansCooler {
     public class ShmooController {
-        private GpioController _gpioController;
+        private readonly GpioController _gpioController;
         private int _relay2Pin = 19;
-        private int _relay3Pin = 16;
+        private readonly int _relay3Pin = 16;
         private int _noLedChannel = 8;
         private int _ncLedChannel = 9;
 
 
-        private Sn3218 _ledController = new Sn3218();
+        private readonly Sn3218 _ledController = new();
 
         public bool IsShmooReleased { get; private set; }
         public bool IsGatesOpen { get; private set; }

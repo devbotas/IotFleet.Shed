@@ -15,12 +15,12 @@ namespace PoorMansCooler {
     class Program {
         public static Logger Log = LogManager.GetCurrentClassLogger();
 
-        private static PahoClientDeviceConnection _broker = new PahoClientDeviceConnection();
+        private static readonly PahoClientDeviceConnection _broker = new();
         private static string _mqttBrokerIpAddress;
 
         private static double _threshold = 25;
         private static bool _isItFuckingHot = false;
-        private static ShmooController _shmooController = new ShmooController();
+        private static readonly ShmooController _shmooController = new();
 
         private static ClientDevice _clientDevice;
         private static ClientNumberProperty _supplyAirTemperature;
@@ -31,12 +31,12 @@ namespace PoorMansCooler {
         private static string _influxDbOrg;
         private static InfluxDBClient _influxDbClient;
 #if DEBUG
-        private static string _influxDbAddress = "http://172.16.0.198:8086";
+        private static readonly string _influxDbAddress = "http://172.16.0.198:8086";
 #else
         private static string _influxDbAddress = "http://localhost:8086";
 #endif
 
-        static void Main(string[] args) {
+        static void Main() {
             ConfigureLogger();
             LoadEnvironment();
             InitializeDatabase();
@@ -75,19 +75,17 @@ namespace PoorMansCooler {
                 if (_isItFuckingHot && (_shmooController.IsShmooReleased == false)) {
                     Log.Info($"Releasing the shmoo. It is {_supplyAirTemperature.Value} °C now.");
                     _shmooController.ReleaseTheShmoo();
-                    using (var influxDbWriteApi = _influxDbClient.GetWriteApi()) {
-                        var valveStatePoint = PointData.Measurement("recuperator").Field("valve-state", 1).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
-                        influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, valveStatePoint);
-                    }
+                    using var influxDbWriteApi = _influxDbClient.GetWriteApi();
+                    var valveStatePoint = PointData.Measurement("recuperator").Field("valve-state", 1).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+                    influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, valveStatePoint);
                 }
 
                 if ((_isItFuckingHot == false) && _shmooController.IsShmooReleased) {
                     Log.Info($"Stopping the shmoo. It is {_supplyAirTemperature.Value} °C now.");
                     _shmooController.StopTheShmoo();
-                    using (var influxDbWriteApi = _influxDbClient.GetWriteApi()) {
-                        var valveStatePoint = PointData.Measurement("recuperator").Field("valve-state", 0).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
-                        influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, valveStatePoint);
-                    }
+                    using var influxDbWriteApi = _influxDbClient.GetWriteApi();
+                    var valveStatePoint = PointData.Measurement("recuperator").Field("valve-state", 0).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+                    influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, valveStatePoint);
                 }
 
                 var cpuTempString = System.IO.File.ReadAllText("/sys/class/thermal/thermal_zone0/temp");
@@ -110,7 +108,8 @@ namespace PoorMansCooler {
                         _shmooController.CloseTheGates();
                         gateCloseTime = DateTime.Now;
                     }
-                } else {
+                }
+                else {
                     _shmooController.CloseTheGates();
                 }
 
@@ -154,17 +153,15 @@ namespace PoorMansCooler {
             _supplyAirTemperature = _clientDevice.CreateClientNumberProperty(new ClientPropertyMetadata { PropertyType = PropertyType.State, NodeId = "temperatures", PropertyId = "supply-air-temperature" });
             _supplyAirTemperature.PropertyChanged += (sender, e) => {
                 var temperaturePoint = PointData.Measurement("recuperator").Field("supply-air-temperature", _supplyAirTemperature.Value).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
-                using (var influxDbWriteApi = _influxDbClient.GetWriteApi()) {
-                    influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, temperaturePoint);
-                }
+                using var influxDbWriteApi = _influxDbClient.GetWriteApi();
+                influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, temperaturePoint);
             };
 
             _actualLevel = _clientDevice.CreateClientTextProperty(new ClientPropertyMetadata { PropertyType = PropertyType.State, NodeId = "ventilation", PropertyId = "actual-level" });
             _actualLevel.PropertyChanged += (sender, e) => {
                 var ventilationLevelPoint = PointData.Measurement("recuperator").Field("actual-ventilation-level", _actualLevel.Value).Timestamp(DateTime.UtcNow, WritePrecision.Ns);
-                using (var influxDbWriteApi = _influxDbClient.GetWriteApi()) {
-                    influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, ventilationLevelPoint);
-                }
+                using var influxDbWriteApi = _influxDbClient.GetWriteApi();
+                influxDbWriteApi.WritePoint(_influxDbBucket, _influxDbOrg, ventilationLevelPoint);
             };
         }
         private static void InitializeConnections() {

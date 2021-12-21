@@ -10,9 +10,9 @@ namespace IotFleet.Shed;
 class ReliableModbus {
     private string _deviceIp = "localhost";
     private CancellationTokenSource _globalCancellationTokenSource;
-    private Logger _log = LogManager.GetCurrentClassLogger();
+    private readonly Logger _log = LogManager.GetCurrentClassLogger();
     private SharpModbus.ModbusMaster _modbus;
-    private object _modbusLock = new object();
+    private readonly object _modbusLock = new();
     private IExceptionlessSocket _socket;
 
     public bool IsConnected { get; private set; }
@@ -144,8 +144,8 @@ class ReliableModbus {
         if (isOk) { Thread.Sleep(100); }
 
         if (isOk) {
-            var receiveResult = _socket.TryReceive(receiveBuffer, 0, receiveBuffer.Length, receiveBuffer.Length);
-            if (receiveResult.IsOk == false) {
+            var (IsOk, _) = _socket.TryReceive(receiveBuffer, 0, receiveBuffer.Length, receiveBuffer.Length);
+            if (IsOk == false) {
                 _log.Warn("Couldn't receive from ModBus device. Disconnecting.");
                 isOk = false;
                 DisconnectAndCleanup();

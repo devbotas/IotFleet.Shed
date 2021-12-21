@@ -4,8 +4,6 @@ namespace IotFleet.Shed;
 
 partial class Domekt200 {
     private bool TryReadDateTime(out DateTime dateTime) {
-        var succeeded = false;
-
         _reliableModbus.TryReadModbusRegister(KomfoventRegisters.HourAndMinute, out var hourAndMinute);
         var hour = hourAndMinute >> 8;
         var minute = hourAndMinute & 0xF;
@@ -16,6 +14,7 @@ partial class Domekt200 {
 
         _reliableModbus.TryReadModbusRegister(KomfoventRegisters.Year, out var year);
 
+        bool succeeded;
         try {
             dateTime = new DateTime(year, month, day, hour, minute, 0);
             succeeded = true;

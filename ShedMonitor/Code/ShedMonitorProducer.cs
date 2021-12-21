@@ -3,12 +3,13 @@ using System.Threading;
 using DevBot9.Protocols.Homie;
 using DevBot9.Protocols.Homie.Utilities;
 using NLog;
+using Tevux.Protocols.Mqtt;
 using Tinkerforge;
 
-namespace IotFleer.Shed;
+namespace IotFleet.Shed;
 class ShedMonitorProducer {
-    private CancellationTokenSource _globalCancellationTokenSource = new CancellationTokenSource();
-    private PahoHostDeviceConnection _broker = new PahoHostDeviceConnection();
+    private CancellationTokenSource _globalCancellationTokenSource = new();
+    private readonly YahiTevuxHostConnection _broker = new();
 
     private HostDevice _device;
     public HostNumberProperty Pressure;
@@ -18,9 +19,8 @@ class ShedMonitorProducer {
 
     public HostNumberProperty WaterPressure;
 
-    private DateTime _startTime = DateTime.Now;
+    private readonly DateTime _startTime = DateTime.Now;
     private HostNumberProperty _systemUptime;
-    private HostTextProperty _systemIpAddress;
 
     public BrickletAirQuality AirQualityBricklet { get; set; }
     public BrickletIndustrialDual020mA Industrial020Bricklet { get; set; }
@@ -28,7 +28,7 @@ class ShedMonitorProducer {
 
     public ShedMonitorProducer() { }
 
-    public void Initialize(string mqttBrokerIpAddress) {
+    public void Initialize(ChannelConnectionOptions channelOptions) {
         Log.Info($"Initializing {nameof(ShedMonitorProducer)}.");
 
         _globalCancellationTokenSource = new CancellationTokenSource();
@@ -46,19 +46,11 @@ class ShedMonitorProducer {
 
         _device.UpdateNodeInfo("system", "System", "no-type");
         _systemUptime = _device.CreateHostNumberProperty(PropertyType.State, "system", "uptime", "Uptime", 0, "h");
-        _systemIpAddress = _device.CreateHostTextProperty(PropertyType.State, "system", "ip-address", "IP address", Program.GetLocalIpAddress());
 
         Log.Info($"Initializing Homie entities.");
-        _broker.Initialize(mqttBrokerIpAddress, (severity, message) => {
-            if (severity == "Info") { Log.Info(message); }
-            else if (severity == "Error") { Log.Error(message); }
-            else { Log.Debug(message); }
-        });
-        _device.Initialize(_broker, (severity, message) => {
-            if (severity == "Info") { Log.Info(message); }
-            else if (severity == "Error") { Log.Error(message); }
-            else { Log.Debug(message); }
-        });
+        // This builds topic trees and subscribes to everything.
+        _broker.Initialize(channelOptions);
+        _device.Initialize(_broker);
 
         new Thread(() => {
             Log.Info($"Spinning up parameter monitoring task.");
@@ -79,7 +71,6 @@ class ShedMonitorProducer {
                 }
 
                 _systemUptime.Value = (float)(DateTime.Now - _startTime).TotalHours;
-                _systemIpAddress.Value = Program.GetLocalIpAddress();
 
                 Thread.Sleep(5000);
             }

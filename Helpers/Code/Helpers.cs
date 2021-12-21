@@ -9,7 +9,7 @@ namespace IotFleet;
 public class Helpers {
     private static readonly Logger _log = LogManager.GetCurrentClassLogger();
     static readonly NLog.Layouts.Layout _localLayout = "${longdate}|${uppercase:${level}}|{logger}|${message} ${onexception}";
-    static readonly NLog.Layouts.Layout _mqttLayout = "${message} ${onexception}";
+    // static readonly NLog.Layouts.Layout _mqttLayout = "${message} ${onexception}";
 
     public static string LoadEnvOrDie(string envVariable, string defaultValue = "") {
         if (string.IsNullOrEmpty(envVariable)) { throw new ArgumentException("Requested ENV variable must be an non-empty string.", nameof(envVariable)); }

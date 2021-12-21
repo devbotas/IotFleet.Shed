@@ -60,8 +60,10 @@ services:
       io.resin.features.supervisor-api: '1'
       io.resin.features.resin-api: '1'
 
-  shedmonitor:
-    image: devbot9/tinkerforge-shedmonitor:latest
+  shed-monitor:
+    build:
+      context: .
+      dockerfile: ShedMonitor/Dockerfile
     restart: unless-stopped
     network_mode: host
 

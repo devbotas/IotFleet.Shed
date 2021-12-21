@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Globalization;
-using System.Threading;
 using DevBot9.Protocols.Homie;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using Tevux.Protocols.Mqtt;
 
 namespace IotFleet.Shed;
 
 class Program {
-    private static Domekt200 _recuperator = new Domekt200();
+    private static readonly Domekt200 _recuperator = new();
     public static Logger Log = LogManager.GetLogger("HomieWrapper.Main");
-    static void Main(string[] args) {
+    static void Main() {
         // Configuring logger.
         var Log = LogManager.GetCurrentClassLogger();
         var config = new LoggingConfiguration();
@@ -26,10 +25,14 @@ class Program {
         var brokerIp = Helpers.LoadEnvOrDie("MQTT_BROKER_IP", "localhost");
         var domektIp = Helpers.LoadEnvOrDie("DOMEKT_IP", "localhost");
 
-        Log.Info("Application started.");
-        DeviceFactory.Initialize("homie");
-        _recuperator.Initialize(brokerIp, domektIp);
 
+        DeviceFactory.Initialize("homie");
+        var channelOptions = new ChannelConnectionOptions();
+        channelOptions.SetHostname(brokerIp);
+
+        _recuperator.Initialize(channelOptions, domektIp);
+
+        Log.Info("Application started.");
         Console.ReadLine();
     }
 }

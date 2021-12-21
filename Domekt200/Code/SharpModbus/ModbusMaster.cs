@@ -4,7 +4,7 @@ using NLog;
 namespace SharpModbus;
 
 public class ModbusMaster {
-    private Logger _log = LogManager.GetCurrentClassLogger();
+    private readonly Logger _log = LogManager.GetCurrentClassLogger();
 
     public delegate bool WriteReadDeviceDelegate(byte[] sendBuffer, byte[] receiveBuffer);
 

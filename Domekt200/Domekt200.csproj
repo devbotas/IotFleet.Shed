@@ -14,7 +14,6 @@
   <ItemGroup>
     <PackageReference Include="DevBot9.Protocols.Homie" Version="0.10.0" />
     <PackageReference Include="DevBot9.Protocols.Homie.Utilities" Version="0.10.0" />
-    <PackageReference Include="InfluxDB.Client" Version="3.2.0" />
     <PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="NLog" Version="4.7.9" />

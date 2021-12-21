@@ -11,10 +11,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShedMonitor", "ShedMonitor\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoorMansCooler", "PoorMansCooler\PoorMansCooler.csproj", "{E23EB1CC-9E7F-4016-9D3A-A47252071961}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLogger", "DataLogger\DataLogger.csproj", "{C22CB189-74E0-43EB-8993-2867854FC49E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Helpers\SharedProject1.projitems*{3fba678b-71b5-4548-85ad-0daa7c98458d}*SharedItemsImports = 5
+		Helpers\SharedProject1.projitems*{8954b424-141b-49f8-b683-236f5e27be22}*SharedItemsImports = 5
 		Helpers\SharedProject1.projitems*{92f89d97-b810-405e-b1e6-4d1d0833206d}*SharedItemsImports = 13
+		Helpers\SharedProject1.projitems*{c22cb189-74e0-43eb-8993-2867854fc49e}*SharedItemsImports = 5
 		Helpers\SharedProject1.projitems*{e23eb1cc-9e7f-4016-9d3a-a47252071961}*SharedItemsImports = 5
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,10 @@ Global
 		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E23EB1CC-9E7F-4016-9D3A-A47252071961}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22CB189-74E0-43EB-8993-2867854FC49E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22CB189-74E0-43EB-8993-2867854FC49E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22CB189-74E0-43EB-8993-2867854FC49E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22CB189-74E0-43EB-8993-2867854FC49E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

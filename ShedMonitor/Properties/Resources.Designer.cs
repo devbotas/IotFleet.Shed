@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ShedMonitor.Properties {
+namespace IotFleer.Properties {
     using System;
     
     

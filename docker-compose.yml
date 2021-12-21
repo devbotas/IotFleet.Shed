@@ -64,3 +64,10 @@ services:
     image: devbot9/tinkerforge-shedmonitor:latest
     restart: unless-stopped
     network_mode: host
+
+  data-logger:
+    build:
+      context: .
+      dockerfile: DataLogger/Dockerfile
+    restart: unless-stopped
+    network_mode: host

@@ -83,7 +83,12 @@ partial class Domekt200 {
 
                 allOk = _reliableModbus.TryReadModbusRegister(KomfoventRegisters.SupplyAirTemperature, out var supplyAirTemperature);
                 if (allOk) {
-                    SupplyAirTemperatureProperty.Value = supplyAirTemperature / 10.0f;
+                    if (Math.Abs(supplyAirTemperature / 10.0f) < 50) {
+                        SupplyAirTemperatureProperty.Value = supplyAirTemperature / 10.0f;
+                    }
+                    else {
+                        Log.Error($"Temperature reading was off-limits: {supplyAirTemperature / 10.0f:F1}. Skipping it.");
+                    }
                 }
             }
             catch (Exception ex) {

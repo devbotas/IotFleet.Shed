@@ -1,1 +1,1 @@
-[![CI](https://github.com/devbotas/Tinkerforge.ShedMonitor/actions/workflows/CI.yml/badge.svg)](https://github.com/devbotas/Tinkerforge.ShedMonitor/actions/workflows/CI.yml)
+

@@ -67,6 +67,14 @@ services:
     restart: unless-stopped
     network_mode: host
 
+  poor-mans-cooler:
+    build:
+      context: .
+      dockerfile: PoorMansCooler/Dockerfile
+    privileged: true
+    restart: unless-stopped
+    network_mode: host
+
   data-logger:
     build:
       context: .

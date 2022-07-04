@@ -13,7 +13,7 @@ internal class CoolerProducer {
 
     private static readonly YahiTevuxClientConnection _broker = new();
 
-    private static double _threshold = 25;
+    private static double _threshold = 26;
     private static bool _isItFuckingHot = false;
     private static bool _isItDaytime = false;
     private static readonly ShmooController _shmooController = new();
